@@ -22,3 +22,17 @@ require 'config/database.php';
 require 'config/helpers.php';
 require 'config/Db.php';
 require 'config/routes.php';
+
+/* $nom = 'Harry Potter';
+$attack = 80;
+$experience = 10;
+$speciality = 'patronus';
+
+$player = new Player ($nom, $attack, $experience, $speciality);
+$player->save(); */
+
+$name = "gryffindor";
+$point = 0;
+
+$house = New House ($name, $point);
+$house->save();
