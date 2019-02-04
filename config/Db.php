@@ -3,11 +3,11 @@ class Db {
     public function __construct() { /** */ }
     private static function getDb() {
         try {
-            // Essaie de faire ce script...
+         
             $bdd = new PDO('mysql:host='.DB_HOST.';dbname='.DB_NAME.';charset=utf8;port='.DB_PORT, DB_USER, DB_PWD);
         }
         catch (Exception $e) {
-            // Sinon, capture l'erreur et affiche la
+     
             die('Erreur : ' . $e->getMessage());
         }
         return $bdd;
@@ -19,12 +19,6 @@ class Db {
      * 
      * @return int      Id de l'enregistrement.
      * 
-     * Exemple :
-     * $table = "Category";
-     * $data = [
-     *      'title'         => "Nouvelle catégorie",
-     *      'description'   => 'Ma nouvelle catégorie.',
-     * ];
      */
     protected static function dbCreate(string $table, array $data) {
         $bdd = self::getDb();
@@ -44,9 +38,6 @@ class Db {
      * 
      * @return void
      * 
-     * Exemple: 
-     * $table = "Movie";
-     * $data = [ 'id' => 3 ];
      */
     protected static function dbDelete(string $table, array $data) {
         $bdd = self::getDb();
@@ -63,12 +54,7 @@ class Db {
      * 
      * @return array    Données demandées.
      * 
-     * Exemple: 
-     * $table = "Movie";
-     * $request = [
-     *      [ 'title', "like",'Rocky' ],
-     *      [ 'realease_date', '>', '2000-01-01']
-     * ];
+     *
      */
     protected static function dbFind(string $table, array $request = null) {
         $bdd = self::getDb();
@@ -107,13 +93,7 @@ class Db {
      * 
      * OBLIGATOIRE : Passer un champ 'id' dans le tableau 'data'.
      * 
-     * Exemple :
-     * $table = "Category";
-     * $data = [
-     *      'id'            => 4,
-     *      'title'         => "Nouveau titre de catégorie",
-     *      'description'   => 'Ma nouvelle catégorie.',
-     * ];
+     * 
      */
     protected static function dbUpdate(string $table, array $data, string $idField = null) {
         $bdd = self::getDb();
