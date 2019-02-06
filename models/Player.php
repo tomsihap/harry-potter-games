@@ -158,7 +158,7 @@ class Player extends Db{
                
                 $house = House::findOne($d['id_house']);
 
-                $objectsList[] = new Player ($d['name'], $d['attack'], $d['defense'], $d['experience'], $d['speciality'], $d['bouclier'], $house, $d['id']);
+                $objectsList[] = new Player ($d['name'], $d['attack'], $d['defense'], $d['experience'], $d['speciality'], $house, $d['id'], $d['bouclier']);
             }
             return $objectsList;
         }
@@ -173,7 +173,7 @@ class Player extends Db{
             $objectsList = [];
 
             foreach ($data as $d) {
-                $objectsList[] = new Player ($d['name'], $d['attack'], $d['defense'], $d['experience'], $d['speciality'], $d['bouclier'], $house, $d['id']);
+                $objectsList[] = new Player ($d['name'], $d['attack'], $d['defense'], $d['experience'], $d['speciality'], $house, $d['id'], $d['bouclier']);
             }
             return $objectsList;
         }
@@ -229,10 +229,7 @@ class Player extends Db{
     } 
     
 
-    public function gagnerExperience(){
-       $this->experience = $this->experience +10;
-       return $this;
-    }
+
 
 
 

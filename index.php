@@ -42,18 +42,18 @@ $aattack = 10;
 $adefense = 100;
 $aexperience = 10;
 $aspeciality = 'toujours à la recherche de nargles';
-$bouclier = 100;
+$abouclier = 100;
 
 $house = House::findOne(8);
-$house1 = House::findOne(1);
-
- $player = new Player ($nom, $attack, $defense, $experience, $speciality, $house, $defense);
- $player2 = new Player ($anom, $aattack, $adefense, $aexperience, $aspeciality, $house1, $defense);
 
 
+ $player = new Player ($nom, $attack, $defense, $experience, $speciality, $house, $bouclier);
+ $player2 = new Player ($anom, $aattack, $adefense, $aexperience, $aspeciality, $house, $abouclier);
 
+
+/* 
  echo 'Player 2 avant combat';
-  var_dump($player2); 
+  var_dump($player2);  */
 
 /* echo $player->name();
 echo "<br>";
@@ -62,9 +62,9 @@ echo $player->house()->name(); */
 /* $player->save();  */
 
 /* var_dump($player->gagnerExperience());   */
-$combat = $player->frapper($player2);  
+/* $combat = $player->frapper($player2);   */
 
-
+/* 
 echo 'player 2 après attaque n1';
 var_dump($player2);
 
@@ -87,3 +87,4 @@ var_dump($player2);
 echo 'Player 2 après attaque n6';
 $combat6 = $player->frapper($player2);
 var_dump($player2);
+ */
