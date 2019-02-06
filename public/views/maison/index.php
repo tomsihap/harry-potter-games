@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
         crossorigin="anonymous">
     <link href="album.css" rel="stylesheet">
-    <title> Joueur · Harry Potter Game</title>
+    <title> Maisons · Harry Potter Game</title>
 
     <style>
         .bd-placeholder-img {
@@ -32,8 +32,8 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-8 col-md-7 py-4">
-                        <h4 class="text-white">Joueur</h4>
-                        <p class="text-muted"> Liste des joueurs</p>
+                        <h4 class="text-white">Maison</h4>
+                        <p class="text-muted">Les maisons de Poudlard</p>
                     </div>
                     <div class="col-sm-4 offset-md-1 py-4">
                         <h4 class="text-white">Contact</h4>
@@ -69,12 +69,10 @@
     <main role="main">
         <section class="jumbotron text-center">
             <div class="container">
-                <h1 class="jumbotron-heading">Joueurs</h1>
+                <h1 class="jumbotron-heading">Maisons Poudlard</h1>
                 <p class="lead text-muted"></p>
                 <p>
-                    <a href="#" class="btn btn-primary my-2">Ajouter un joueur</a>
-                    <a href="#" class="btn btn-secondary my-2">Voir les maisons</a>
-                    <br>
+                    <a href="#" class="btn btn-secondary my-2">Voir les joueurs</a><br>
                     <a href="#" class="btn btn-danger btn-lg my-2">Combattre</a>
                 </p>
             </div>
@@ -84,21 +82,23 @@
             <div class="container">
 
                 <div class="row">
-                    <?php foreach($players as $p) : ?>           
+                    <?php foreach($houses as $h) : ?>           
                     <div class="col-md-4">
                         <div class="card mb-4 shadow-sm">
                             <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
-                                preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: <?= $p->name(); ?>">
-                                <title><?= $p->name(); ?></title>
+                                preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: <?= $h->name(); ?>">
+                                <title><?= $h->name(); ?></title>
                                 <rect fill="#55595c" width="100%" height="100%" /><text fill="#eceeef" dy=".3em" x="50%"
-                                    y="50%"><?= $p->name(); ?></text>
+                                    y="50%"><?= $h->name(); ?></text>
                             </svg>
-                            <div class="card-body">
-                                <p class="card-text"><?= $p->speciality(); ?><br>
-                                Maison : <strong><?= $p->house()->name(); ?></strong> <br>
-                                Attaque : <?= $p->attack(); ?><br>
-                                Bouclier : <?= $p->bouclier(); ?> <br>
-                                Défense : <?= $p->defense(); ?></p>
+                            <div class="card-body"> 
+                            <ul>
+                                <p class="card-text"><?php foreach ($h->qualityList() as $quality) :  ?>
+                                   <li><?= $quality; ?> </li>
+                                    
+                                <?php endforeach; ?>
+                                </ul>
+                                Points : <?= $h->points(); ?><br>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-sm btn-outline-secondary">View</button>

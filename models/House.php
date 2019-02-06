@@ -5,16 +5,18 @@ class House extends Db{
     protected $id;
     protected $name;
     protected $points;
+    protected $quality;
 
     //constantes
     const TABLE_NAME = "House" ;
 
     //constructor
-    public function __construct($name, $points, $id = null){
+    public function __construct($name, $points, $quality, $id = null){
     
         $this->setId($id);
         $this->setName($name);
         $this->setPoints($points);
+        $this->setQuality($quality);
     }
 
     //getters
@@ -30,25 +32,43 @@ class House extends Db{
         return $this->points;
     }
 
+    public function quality(){
+        return $this->quality;
+    }
+    public function qualityList(){
+        $list = explode(', ', $this->quality);
+        return $list;
+    }
+
 
     //setters
     public function setId($id){
         $this->id = $id;
+        return $this;
     }
 
     public function setName($name){
         $this->name = $name;
+        return $this;
     }
 
     public function setPoints($points){
         $this->points = $points;
+        return $this;
     }
+
+    public function setQuality($quality){
+        $this->quality = $quality;
+        return $this;
+    }
+
     //méthodes
     public function save(){
 
         $data = [
             'name'          => $this->name(),
             'points'        => $this->points(),
+            'quality'       => $this->quality(),
         ];
 
         if($this->id > 0) return $this->update();
@@ -63,9 +83,10 @@ class House extends Db{
     public function update(){
         if($this->id > 0){
             $data = [
-               'id'         => $this->id(),
-               'name'      => $this->name(),
-               'points'      => $this->points()
+               'id'             => $this->id(),
+               'name'           => $this->name(),
+               'points'         => $this->points(),
+               'quality'        => $this->quality()
             ];
 
             Db::dbUpdate(self::TABLE_NAME, $data);
@@ -89,7 +110,7 @@ class House extends Db{
             $objectsList = [];
             foreach ($data as $d) {
                
-                $objectsList[] = new House($d['name'], $d['points'], $d['id']);
+                $objectsList[] = new House($d['name'], $d['points'], $d['quality'], $d['id']);
             }
             return $objectsList;
         }
@@ -105,7 +126,7 @@ class House extends Db{
             $objectsList = [];
 
             foreach ($data as $d) {
-                $objectsList[] = new House($d['name'], $d['points'], $d['id']);
+                $objectsList[] = new House($d['name'], $d['points'], $d['quality'], $d['id']);
             }
             return $objectsList;
         }
@@ -128,7 +149,7 @@ class House extends Db{
 
         if ($object) { 
             
-            $house = new House($element['name'], $element['points'], $element['id']);
+            $house = new House($element['name'], $element['points'], $element['quality'], $element['id']);
         
             return $house;
         }
