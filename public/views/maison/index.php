@@ -73,7 +73,7 @@
                 <p class="lead text-muted"></p>
                 <p>
                     <a href="#" class="btn btn-secondary my-2">Voir les joueurs</a><br>
-                    <a href="#" class="btn btn-danger btn-lg my-2">Combattre</a>
+                    <a href="#" class="btn btn-danger  btn-lg btn-block my-2">Combattre</a>
                 </p>
             </div>
         </section>

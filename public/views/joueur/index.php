@@ -75,7 +75,7 @@
                     <a href="#" class="btn btn-primary my-2">Ajouter un joueur</a>
                     <a href="#" class="btn btn-secondary my-2">Voir les maisons</a>
                     <br>
-                    <a href="#" class="btn btn-danger btn-lg my-2">Combattre</a>
+                    <a href="#" class="btn btn-danger  btn-lg btn-block my-2">Combattre</a>
                 </p>
             </div>
         </section>
