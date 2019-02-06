@@ -4,30 +4,30 @@ class House extends Db{
     //atributs
     protected $id;
     protected $name;
-    protected $point;
+    protected $points;
 
     //constantes
     const TABLE_NAME = "House" ;
 
     //constructor
-    public function __construct($name, $point, $id = null){
+    public function __construct($name, $points, $id = null){
     
         $this->setId($id);
         $this->setName($name);
-        $this->setPoint($point);
+        $this->setPoints($points);
     }
 
     //getters
     public function id(){
-        $this->$id;
+        return $this->id;
     }
 
     public function name(){
         return $this->name;
     }
 
-    public function point(){
-        return $this->point;
+    public function points(){
+        return $this->points;
     }
 
 
@@ -40,15 +40,15 @@ class House extends Db{
         $this->name = $name;
     }
 
-    public function setPoint($point){
-        $this->point = $point;
+    public function setPoints($points){
+        $this->points = $points;
     }
     //méthodes
     public function save(){
 
         $data = [
             'name'          => $this->name(),
-            'point'        => $this->point(),
+            'points'        => $this->points(),
         ];
 
         if($this->id > 0) return $this->update();
@@ -65,7 +65,7 @@ class House extends Db{
             $data = [
                'id'         => $this->id(),
                'name'      => $this->name(),
-               'point'      => $this->point()
+               'points'      => $this->points()
             ];
 
             Db::dbUpdate(self::TABLE_NAME, $data);
@@ -89,13 +89,31 @@ class House extends Db{
             $objectsList = [];
             foreach ($data as $d) {
                
-                $objectsList[] = new House($d['id'], $d['name'], $d['point']);
+                $objectsList[] = new House($d['name'], $d['points'], $d['id']);
             }
             return $objectsList;
         }
 
         return $data;
     }
+
+
+    public static function find(array $request, $objects = true) {
+        $data = Db::dbFind(self::TABLE_NAME, $request);
+
+        if ($objects) {
+            $objectsList = [];
+
+            foreach ($data as $d) {
+                $objectsList[] = new House($d['name'], $d['points'], $d['id']);
+            }
+            return $objectsList;
+        }
+
+        return $data;
+    }
+
+
 
     public static function findOne(int $id, bool $object = true) {
 
@@ -105,11 +123,14 @@ class House extends Db{
 
         $element = Db::dbFind(self::TABLE_NAME, $request);
 
-        $element = $element[0];
+        if (count($element) > 0) $element = $element[0];
+        else return;
 
-        if ($object) { $player = new House($element['name'], $element['point']);
+        if ($object) { 
+            
+            $house = new House($element['name'], $element['points'], $element['id']);
         
-            return $player;
+            return $house;
         }
 
         return $element;

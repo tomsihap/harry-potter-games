@@ -23,16 +23,67 @@ require 'config/helpers.php';
 require 'config/Db.php';
 require 'config/routes.php';
 
-/* $nom = 'Harry Potter';
-$attack = 80;
+
+
+
+
+ 
+// player 1
+$nom = 'Luna Lovegood';
+$attack = 10;
+$defense = 100;
 $experience = 10;
-$speciality = 'patronus';
+$speciality = 'toujours à la recherche de nargles';
+$bouclier = 100;
 
-$player = new Player ($nom, $attack, $experience, $speciality);
-$player->save(); */
+// player 2
+$anom = 'Salut Lovegood';
+$aattack = 10;
+$adefense = 100;
+$aexperience = 10;
+$aspeciality = 'toujours à la recherche de nargles';
+$bouclier = 100;
 
-$name = "gryffindor";
-$point = 0;
+$house = House::findOne(8);
+$house1 = House::findOne(1);
 
-$house = New House ($name, $point);
-$house->save();
+ $player = new Player ($nom, $attack, $defense, $experience, $speciality, $house, $defense);
+ $player2 = new Player ($anom, $aattack, $adefense, $aexperience, $aspeciality, $house1, $defense);
+
+
+
+ echo 'Player 2 avant combat';
+  var_dump($player2); 
+
+/* echo $player->name();
+echo "<br>";
+echo $player->house()->name(); */
+
+/* $player->save();  */
+
+/* var_dump($player->gagnerExperience());   */
+$combat = $player->frapper($player2);  
+
+
+echo 'player 2 après attaque n1';
+var_dump($player2);
+
+echo 'Player 2 après attaque n2';
+$combat2 = $player->frapper($player2);
+var_dump($player2);
+
+echo 'Player 2 après attaque n3';
+$combat3 = $player->frapper($player2);
+var_dump($player2);
+
+echo 'Player 2 après attaque n4';
+$combat4 = $player->frapper($player2);
+var_dump($player2);
+
+echo 'Player 2 après attaque n5';
+$combat5 = $player->frapper($player2);
+var_dump($player2);
+
+echo 'Player 2 après attaque n6';
+$combat6 = $player->frapper($player2);
+var_dump($player2);
