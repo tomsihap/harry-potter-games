@@ -30,15 +30,15 @@ require 'config/routes.php';
  
 // player 1
 $nom = 'Luna Lovegood';
-$attack = 10;
+$attack = 12;
 $defense = 100;
 $experience = 10;
 $speciality = 'toujours à la recherche de nargles';
 $bouclier = 100;
 
 // player 2
-$anom = 'Salut Lovegood';
-$aattack = 10;
+$anom = 'Thomas Chose';
+$aattack = 11;
 $adefense = 100;
 $aexperience = 10;
 $aspeciality = 'toujours à la recherche de nargles';
@@ -47,13 +47,17 @@ $abouclier = 100;
 $house = House::findOne(8);
 
 
- $player = new Player ($nom, $attack, $defense, $experience, $speciality, $house, $bouclier);
- $player2 = new Player ($anom, $aattack, $adefense, $aexperience, $aspeciality, $house, $abouclier);
+$player = new Player ($nom, $attack, $defense, $experience, $speciality, $house, $bouclier);
+$player2 = new Player ($anom, $aattack, $adefense, $aexperience, $aspeciality, $house, $abouclier);
 
+$gagnant = Fight::combat($player, $player2);
+
+echo "Gagnant :<br>";
+var_dump($gagnant);
 
 /* 
- echo 'Player 2 avant combat';
-  var_dump($player2);  */
+echo 'Player 2 avant combat';
+var_dump($player2);  */
 
 /* echo $player->name();
 echo "<br>";

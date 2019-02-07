@@ -6,6 +6,7 @@ class Player extends Db{
     protected $id;
     protected $name;
     protected $attack;
+    protected $attackRand;
     protected $defense;
     protected $experience;
     protected $speciality;
@@ -16,6 +17,10 @@ class Player extends Db{
     //constantes
     const TABLE_NAME = "Player";
 
+    const MIN_ATTACK = 0.75;
+    const MAX_ATTACK = 1.25;
+    const BOUCLIER_ATTACK_COEFFICIENT = 2;
+
     //constructor
     public function __construct($name, $attack, $defense, $experience, $speciality, House $house,  $id = null, $bouclier = 100){
         
@@ -25,7 +30,7 @@ class Player extends Db{
         $this->setExperience($experience);
         $this->setSpeciality($speciality);
         $this->setBouclier($bouclier);
-        $this-> setHouse($house);
+        $this->setHouse($house);
         $this->setId($id);
     }
         
@@ -39,6 +44,18 @@ class Player extends Db{
     public function attack(){
         return $this->attack;
     }
+
+    public function attackRand(){
+
+        $borneA = $this->attack * MIN_ATTACK;
+        $borneB = $this->attack * MAX_ATTACK;
+
+        $attackRand = mt_rand($borneA, $borneB);
+
+        $this->attackRand = $attackRand;
+        return $attackRand;
+    }
+
     public function defense(){
         return $this->defense;
     }
@@ -68,31 +85,44 @@ class Player extends Db{
     public function setId($id){
         $this->id = $id;
     }
+
     public function setName($name){
         return $this->name = $name;
     }
+
     public function setAttack($attack){
-        return $this->attack = $attack;
+        return $this->attack = round($attack);
     }
+
     public function setDefense($defense){
-        return $this->defense = $defense;
+        $this->defense = round($defense);
+    
+        if($this->defense <= 0 ){
+            $this->defense = 0;
+            //trigger_error('bouclier est foutu');
+        } 
+        return $this;
     }
+
     public function setExperience($experience){
-        return $this->experience = $experience;
+        return $this->experience = round($experience);
     }
+
     public function setSpeciality($speciality){
         return $this->speciality = $speciality;
     }
+
     public function setBouclier($bouclier){
 
-        $this->bouclier = $bouclier;
-
-         if($this->bouclier <= 0 ){
+        $this->bouclier = round($bouclier);
+    
+        if($this->bouclier <= 0 ){
             $this->bouclier = 0;
             //trigger_error('bouclier est foutu');
         } 
         return $this;
     }
+
     public function setHouse(House $house){
         $this->idHouse = $house->id();
         $this->house = $house;
@@ -173,6 +203,8 @@ class Player extends Db{
             $objectsList = [];
 
             foreach ($data as $d) {
+                $house = House::findOne($d['id_house']);
+
                 $objectsList[] = new Player ($d['name'], $d['attack'], $d['defense'], $d['experience'], $d['speciality'], $house, $d['id'], $d['bouclier']);
             }
             return $objectsList;
@@ -204,30 +236,35 @@ class Player extends Db{
         return $element;
     }
 
-     public function frapper($persoAFrapper){
-
-    $resteBouclier = $persoAFrapper->bouclier- $this->attack * 2;
-
-        if($persoAFrapper->bouclier >= 0){
-            // Si j'ai un bouclier, je déduis les dégats de bouclier
-            $persoAFrapper->setBouclier($resteBouclier);            
-        }
-        else {
-
-            // Sinon, je déduis tous les dégats dans la défense
-            $persoAFrapper->defense -= $this->attack;
-        }
-        // Je déduis les restes de dégats qui dépassent du bouclier s'il a été détruit
-        // ( => bouclier < 0)
-        if ($resteBouclier < 0) { 
-            $persoAFrapper->defense += $resteBouclier/2;
-        }
-
-        $persoAFrapper->save();
-
-        return $this;
+    public function gagnerExperience() {
+        $this->setExperience($this->experience + 10);
+        return $this;        
     } 
+
+    public function frapper($persoAFrapper){
+
+        $resteBouclier = $persoAFrapper->bouclier() - $this->attackRand() * BOUCLIER_ATTACK_COEFFICIENT;
     
+            if($persoAFrapper->bouclier >= 0){
+                // Si j'ai un bouclier, je déduis les dégats de bouclier
+                $persoAFrapper->setBouclier($resteBouclier);            
+            }
+            else {
+    
+                // Sinon, je déduis tous les dégats dans la défense
+                $persoAFrapper->setDefense($persoAFrapper->defense() - $this->attackRand());
+            }
+            // Je déduis les restes de dégats qui dépassent du bouclier s'il a été détruit
+            // ( => bouclier < 0)
+            if ($resteBouclier < 0) { 
+                $persoAFrapper->setDefense($persoAFrapper->defense() + $resteBouclier/BOUCLIER_ATTACK_COEFFICIENT);
+            }
+    
+            $persoAFrapper->save();
+    
+            return $this;
+        } 
+
 
 
 

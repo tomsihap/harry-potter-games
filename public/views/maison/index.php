@@ -72,7 +72,7 @@
                 <h1 class="jumbotron-heading">Maisons Poudlard</h1>
                 <p class="lead text-muted"></p>
                 <p>
-                    <a href="#" class="btn btn-secondary my-2">Voir les joueurs</a><br>
+                    <a href="joueur" class="btn btn-secondary my-2">Voir les joueurs</a><br>
                     <a href="#" class="btn btn-danger  btn-lg btn-block my-2">Combattre</a>
                 </p>
             </div>
